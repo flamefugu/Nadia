@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Undangan untuk Nadia</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#fffaf0;--ink:#3b2a20;--peach:#ffb59a;--peach2:#e5735a;box-sizing:border-box}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{position:fixed;inset:0;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#3a281b,#120e0a 75%);font-family:Georgia,'Times New Roman',serif;color:var(--ink);padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0)}
+.stage{position:fixed;inset:0;display:grid;place-items:center;perspective:1100px}
+
+/* ---------- amplop ---------- */
+.env{position:relative;width:min(84vw,400px);aspect-ratio:3/2;cursor:pointer;outline:none;transition:transform 1s cubic-bezier(.5,0,.3,1),opacity .8s;animation:float 4s ease-in-out infinite;-webkit-tap-highlight-color:transparent}
+.env:focus-visible{outline:2px solid #ffd9a0;outline-offset:8px}
+@keyframes float{50%{translate:0 -7px}}
+.env>*{position:absolute}
+.back{inset:0;background:#d9b588;border-radius:6px;box-shadow:0 18px 40px rgba(0,0,0,.55)}
+.mini{left:7%;right:7%;top:8%;bottom:10%;background:var(--paper);border-radius:3px;z-index:1;transition:transform 1s cubic-bezier(.4,0,.2,1)}
+.fl,.fr,.fb{inset:0;z-index:2}
+.fl{background:#ecc99d;clip-path:polygon(0 0,100% 52%,0 100%)}
+.fr{background:#e8c394;clip-path:polygon(100% 0,0 52%,100% 100%)}
+.fb{background:#f3d5ae;clip-path:polygon(0 100%,50% 44%,100% 100%);border-radius:0 0 6px 6px}
+.flap{left:0;right:0;top:0;height:56%;z-index:3;background:#f6dcb9;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .8s cubic-bezier(.5,0,.3,1)}
+.seal{left:50%;top:55%;width:17%;aspect-ratio:1;z-index:4;translate:-50% -50%;border-radius:48% 52% 50% 50%/52% 48% 52% 48%;background:radial-gradient(circle at 35% 30%,var(--peach),var(--peach2) 70%);box-shadow:0 3px 8px rgba(80,25,10,.5),inset 0 0 0 3px rgba(255,255,255,.18),inset 0 -3px 6px rgba(120,40,20,.35);display:grid;place-items:center;transition:transform .3s,opacity .3s}
+.seal svg{width:68%;height:68%;filter:drop-shadow(0 1px 0 rgba(255,255,255,.35)) drop-shadow(0 -1px 0 rgba(110,35,15,.5))}
+.crack .seal{transform:scale(1.25) rotate(8deg);opacity:0}
+.open .flap{transform:rotateX(180deg);filter:brightness(.92)}
+.flip .flap{z-index:0}
+.rise .mini{transform:translateY(-64%)}
+.out .env{transform:translateY(42vh) scale(.9);opacity:0;pointer-events:none;animation:none}
+.hint{position:fixed;left:0;right:0;bottom:calc(11vh + env(safe-area-inset-bottom,0px));text-align:center;font-style:italic;font-size:15px;color:#f3e8d2;opacity:.8;transition:opacity .5s;animation:pulse 2.2s ease-in-out infinite;pointer-events:none}
+@keyframes pulse{50%{opacity:.35}}
+
+/* ---------- surat ---------- */
+.paper{position:fixed;left:50%;top:50%;width:min(88vw,380px);max-height:88vh;overflow:auto;padding:30px 28px 24px;background:var(--paper) repeating-linear-gradient(transparent 0 29px,rgba(180,140,100,.18) 29px 30px);border-radius:6px;box-shadow:0 22px 50px rgba(0,0,0,.6);transform:translate(-50%,-44%) scale(.9);opacity:0;pointer-events:none;transition:transform 1s cubic-bezier(.3,.8,.3,1),opacity .9s}
+.show .paper{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}
+.ln{margin:0 0 9px;font-size:clamp(15px,4.3vw,18px);line-height:1.5;opacity:0}
+.show .ln{animation:up .8s both;animation-delay:calc(var(--i)*.32s + 1s)}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hand{font-family:'Great Vibes','Brush Script MT',cursive;font-size:clamp(26px,8vw,34px);line-height:1.2}
+.dt{display:flex;gap:.4em}.dt b{display:inline-block;min-width:4.6em;font-weight:normal}
+.sp{height:6px}
+.sig{text-align:right;margin-top:14px}
+.sig small{display:block;font-style:italic;opacity:.75}
+.ok{display:block;margin:18px auto 0;font:inherit;font-size:18px;letter-spacing:.08em;color:#4a2216;background:linear-gradient(var(--peach),var(--peach2));border:0;border-radius:999px;padding:12px 44px;cursor:pointer;box-shadow:0 4px 12px rgba(120,40,20,.35);opacity:0;pointer-events:none;transition:opacity .8s,transform .15s}
+.ok.on{opacity:1;pointer-events:auto}
+.ok:active{transform:scale(.96)}
+.ok:disabled{filter:grayscale(.55) brightness(.78);cursor:not-allowed;box-shadow:none}
+.note{margin:12px 0 0;text-align:center;font-size:13px;font-style:italic;line-height:1.4;opacity:0;transition:opacity .8s}
+.note.on{opacity:.8}
+.ok:focus-visible{outline:2px solid #4a2216;outline-offset:3px}
+
+/* ---------- kelopak mata (kedip hitam) ---------- */
+.lid{position:fixed;inset:0;z-index:50;pointer-events:none;overflow:hidden}
+.lid[hidden]{display:none}
+.lid .lt,.lid .lb{position:absolute;left:-10%;width:120%;height:56%;background:#000;will-change:transform}
+.lid .lt{top:0;transform:translateY(-101%);border-radius:0 0 50% 50%/0 0 22% 22%}
+.lid .lb{bottom:0;transform:translateY(101%);border-radius:50% 50% 0 0/22% 22% 0 0}
+.lid .bk{position:absolute;inset:0;background:#000;opacity:0}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="env" id="env" role="button" tabindex="0" aria-label="Buka amplop undangan">
+    <div class="back"></div>
+    <div class="mini"></div>
+    <div class="fl"></div><div class="fr"></div><div class="fb"></div>
+    <div class="flap"></div>
+    <div class="seal" aria-hidden="true">
+      <svg viewBox="0 0 64 64" fill="#ffd9c8"><path d="M32 15C19 12 8 25 12 40c4 14 16 18 20 18s16-4 20-18c4-15-7-28-20-25z"/><path d="M32 17c-3 12-2 26 0 39" fill="none" stroke="#e5735a" stroke-width="2" stroke-linecap="round"/><path d="M33 14c3-8 12-10 19-6-3 8-12 10-19 6z" fill="#fff0e6"/></svg>
+    </div>
+  </div>
+  <div class="hint" id="hint">ketuk amplopnya</div>
+
+  <div class="paper" id="paper">
+    <p class="ln hand" style="--i:0">Dear Nadia,</p>
+    <p class="ln" style="--i:1">aku mengundangmu untuk bertemu denganku.</p>
+    <p class="ln" style="--i:2">Aku harap kamu datang menemuiku.</p>
+    <div class="sp"></div>
+    <p class="ln dt" style="--i:3"><b>Tanggal</b>: 19 November 2026</p>
+    <p class="ln dt" style="--i:4"><b>Jam</b>: 19.00 WIB</p>
+    <div class="sp"></div>
+    <p class="ln" style="--i:5">Aku menunggumu</p>
+    <p class="ln sig" style="--i:6"><small>from</small><span class="hand">the person who loves you</span></p>
+    <button class="ok" id="ok" disabled>OK</button>
+    <p class="note" id="note"></p>
+  </div>
+</div>
+
+<iframe id="room" title="Ruangan" allow="fullscreen; autoplay" style="position:fixed;inset:0;width:100%;height:100%;border:0;background:#000;display:none"></iframe>
+<div class="lid" id="lid" hidden><div class="lt"></div><div class="lb"></div><div class="bk"></div></div>
+
+<script>
+(function(){
+  const st=document.getElementById('stage'),env=document.getElementById('env'),hint=document.getElementById('hint'),
+        ok=document.getElementById('ok'),lid=document.getElementById('lid');
+  const OPEN_AT=Date.parse('2026-11-19T19:00:00+07:00');   // 19 November 2026, 19.00 WIB
+  const note=document.getElementById('note');
+  const isOpen=()=>Date.now()>=OPEN_AT;
+  const pad=n=>String(n).padStart(2,'0');
+  function refreshLock(){
+    if(isOpen()){
+      ok.disabled=false;ok.textContent='OK';note.textContent='';
+      return true;
+    }
+    const s=Math.floor((OPEN_AT-Date.now())/1000),d=Math.floor(s/86400);
+    ok.disabled=true;ok.textContent='OK';
+    note.textContent='Baru bisa dibuka 19 November 2026, pukul 19.00 WIB · '+(d?d+' hari ':'')+pad(Math.floor(s%86400/3600))+':'+pad(Math.floor(s%3600/60))+':'+pad(s%60)+' lagi';
+    return false;
+  }
+  refreshLock();setInterval(refreshLock,1000);
+  let opened=false;
+  const at=(ms,fn)=>setTimeout(fn,ms);
+
+  function openEnv(){
+    if(opened)return;opened=true;
+    env.style.animation='none';hint.style.opacity=0;
+    st.classList.add('crack');
+    at(280,()=>st.classList.add('open'));   // tutup amplop terbuka
+    at(700,()=>st.classList.add('flip'));   // tutup masuk ke belakang surat
+    at(900,()=>st.classList.add('rise'));   // surat naik
+    at(1900,()=>st.classList.add('out'));   // amplop turun, surat besar muncul
+    at(2000,()=>st.classList.add('show'));
+    at(2000+7*320+1900,()=>{ok.classList.add('on');note.classList.add('on');});
+  }
+  env.addEventListener('click',openEnv);
+  env.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openEnv();}});
+
+  // kedip: kelopak menutup sampai hitam, lalu pindah ke ruangan (buka mata di depan pintu)
+  function blinkClose(done){
+    lid.hidden=false;
+    const T=950,o=(k,a)=>({offset:k,transform:'translateY('+a+'%)'});
+    const top=[[0,-101],[.4,-38],[.55,-62],[1,0]],bot=top.map(([k,a])=>[k,-a]);
+    const opt={duration:T,easing:'ease-in',fill:'forwards'};
+    lid.querySelector('.lt').animate(top.map(([k,a])=>o(k,a)),opt);
+    lid.querySelector('.lb').animate(bot.map(([k,a])=>o(k,a)),opt);
+    lid.querySelector('.bk').animate([{offset:0,opacity:0},{offset:.8,opacity:0},{offset:1,opacity:1}],{duration:T,fill:'forwards'});
+    at(T+150,done);
+  }
+  const room=document.getElementById('room');
+  async function goLandscape(){
+    try{
+      const de=document.documentElement;
+      if(de.requestFullscreen)await de.requestFullscreen({navigationUI:'hide'});
+      if(screen.orientation&&screen.orientation.lock)await screen.orientation.lock('landscape');
+    }catch(e){}  // tidak didukung (mis. iPhone): ruangan tetap jalan, ada petunjuk putar ponsel
+  }
+  ok.addEventListener('click',()=>{
+    if(!isOpen()){refreshLock();return;}   // belum waktunya
+    ok.disabled=true;
+    goLandscape();                       // harus dipanggil langsung dari ketukan
+    blinkClose(()=>{
+      room.onload=()=>{lid.hidden=true;lid.getAnimations({subtree:true}).forEach(a=>a.cancel());};
+      room.style.display='block';
+      room.src='index.html#buka';
+    });
+  });
+  // kalau kembali lewat tombol back
+  addEventListener('pageshow',e=>{if(e.persisted){lid.hidden=true;lid.getAnimations({subtree:true}).forEach(a=>a.cancel());refreshLock();}});
+})();
+</script>
+</body>
+</html>
